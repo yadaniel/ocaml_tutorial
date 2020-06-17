@@ -47,10 +47,18 @@ let q ?(a=1) ?(b=10) (c:int): int = a+b*c;;
 let q ?(a:int=1) ?(b=10) (c:int): int = a+b*c;;
 let q ?(a:int=1) ?(b:int=10) (c:int): int = a+b*c;;
 
-let q ?(a=1) ?(b=10) (c:int): int = a+b*c;;
+let qq ?a:(x=1) ?b:(y=10) (z:int): int = x+y*z;;
+
+(* when default argument is not given, then infered type is wrappend into option type *)
+let qqq ?a (b:int) (c:int) : int = 
+    match a with
+        | None -> b+c
+        | Some a' -> a'+b+c
+        ;;
 
 let main() =
-    printf "in main\n"
+    printf "";;
+    printf "labeled\n";;
 
     let v = f 1 10 0;; printf "%i\n" v;;
     (* let v = (f 1 ~b:10 ~c:0) in printf "%i\n" v;; *)
@@ -85,8 +93,23 @@ let main() =
     let v = fff ~c:0 ~b:10 ~a:1 in printf "%i\n" v;;
     let v = fff ~b:10 ~a:1 ~c:0 in printf "%i\n" v;;
 
-    (* let v = q ?(a:1) ?(b:10) 0 in printf "%i\n" v;; *)
-    (* let v = q ?a:1 ?b:10 0 in printf "%i\n" v;; *)
+    printf "optional\n";;
+    let v:int = q 10 in printf "%i\n" v;;
+    let v:int = q ~a:1 0 in printf "%i\n" v;;
+    let v:int = q ~a:1 ~b:2 10 in printf "%i\n" v;;
+    let v:int = q 10 ~a:1 ~b:2 in printf "%i\n" v;;
+    let v:int = q ~a:1 10 ~b:2 in printf "%i\n" v;;
+    let v:int = q ~b:2 10 ~a:1 in printf "%i\n" v;;
+
+    let v:int = qq 10 in printf "%i\n" v;;
+    let v:int = qq ~a:1 0 in printf "%i\n" v;;
+    let v:int = qq ~a:1 ~b:2 10 in printf "%i\n" v;;
+    let v:int = qq 10 ~a:1 ~b:2 in printf "%i\n" v;;
+    let v:int = qq ~a:1 10 ~b:2 in printf "%i\n" v;;
+    let v:int = qq ~b:2 10 ~a:1 in printf "%i\n" v;;
+
+    let v:int = qqq 2 10 in printf "qqq %i\n" v;;
+    let v:int = qqq ~a:5 2 10 in printf "qqq %i\n" v;;
 
 let () = main()
 
