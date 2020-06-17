@@ -137,3 +137,16 @@ let () = main()
 (* let v': int = f' ~a:1 ~b:2;; *)
 (* val v' : int = 3 *)
 
+
+(* when using just one optional argument, the functional application is missing *)
+(* let f ?(a=1) : int = a;; *)
+(* let p ?(a:int=1) : int = a;; *)
+(* let q ?a:(x:int=1) : int = x;; *)
+(* let _ = [f;p;q];; *)
+
+(* this is how it can be solved *)
+(* let f' ?(a=1) unit : int = a;; *)
+(* let p' ?(a:int=1) unit : int = a;; *)
+(* let q' ?a:(x:int=1) unit : int = x;; *)
+(* let _ = [f' ();p' ();q' ()];; *)
+
